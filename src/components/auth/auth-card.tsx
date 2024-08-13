@@ -10,6 +10,7 @@ import { SignIn } from "./signin-google";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { LoginForm } from "./login-form";
+import { RegisterForm } from "./register-form";
 
 export function AuthCard(props: {
   title: string;
@@ -26,7 +27,7 @@ export function AuthCard(props: {
       </CardHeader>
       <CardContent>
         {props.type == "login" && <LoginForm />}
-        {props.type == "register" && "Hi"}
+        {props.type == "register" && <RegisterForm />}
       </CardContent>
       <CardFooter className="flex flex-col gap-4">
         <SignIn />
