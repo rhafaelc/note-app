@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
 
+import { ThemeProvider } from "~/components/theme-provider";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { auth } from "~/server/auth";
@@ -21,7 +22,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

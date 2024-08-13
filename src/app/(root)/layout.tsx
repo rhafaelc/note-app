@@ -1,5 +1,6 @@
 import "~/styles/globals.css";
 
+import { ThemeProvider } from "~/components/theme-provider";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { Navbar } from "~/components/navbar/navbar";
@@ -16,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
-        <Navbar />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <Navbar />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
