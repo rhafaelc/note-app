@@ -19,11 +19,12 @@ import { loginAction } from "~/server/action/login-action";
 import { useState } from "react";
 import { ErrorMessage } from "./error-message";
 import { SuccessMessage } from "./success-message";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -38,7 +39,7 @@ export function LoginForm() {
       if (args.data?.success) {
         setSuccess(args.data.success);
         setError("");
-        redirect("/");
+        router.push("/");
       }
       if (args.data?.error) {
         setError(args.data.error);

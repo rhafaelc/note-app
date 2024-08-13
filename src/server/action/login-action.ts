@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { users } from "../db/schema";
 import { signIn } from "../auth";
 import { AuthError } from "next-auth";
+import { isRedirectError } from "next/dist/client/components/redirect";
 
 export const loginAction = actionClient
   .schema(loginSchema)
@@ -22,16 +23,24 @@ export const loginAction = actionClient
       if (!existingUser.password) {
         return { error: "User registered using another method" };
       }
+
       await signIn("credentials", { email, password, redirectTo: "/" });
+
       return { success: "User logged in successfully" };
     } catch (error) {
+      if (isRedirectError(error)) {
+        throw error;
+      }
+
       if (error instanceof AuthError) {
         switch (error.type) {
+          case "CredentialsSignin":
+            return { error: "Wrong email or password" };
           default:
             return { type: error.type, error: error.message };
         }
       }
-
+      console.log(error);
       return { error: "An error occurred" };
     }
   });
