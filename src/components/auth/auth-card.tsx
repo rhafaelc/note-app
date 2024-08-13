@@ -7,9 +7,9 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { SignIn } from "./signin-google";
-import { Separator } from "~/components/ui/separator";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { LoginForm } from "./login-form";
 
 export function AuthCard(props: {
   title: string;
@@ -25,12 +25,12 @@ export function AuthCard(props: {
         <CardDescription>{props.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        {props.type == "login" && "Hi"}
+        {props.type == "login" && <LoginForm />}
         {props.type == "register" && "Hi"}
       </CardContent>
       <CardFooter className="flex flex-col gap-4">
         <SignIn />
-        <Button asChild variant={'link'} className="text-xs">
+        <Button asChild variant={"link"} className="text-xs">
           <Link href={props.backURL}>{props.backMessage}</Link>
         </Button>
       </CardFooter>
