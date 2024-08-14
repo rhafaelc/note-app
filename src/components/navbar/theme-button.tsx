@@ -3,8 +3,9 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Switch } from "~/components/ui/switch";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cn } from "~/lib/utils";
+import { Label } from "~/components/ui/label";
 
 export function ThemeButton() {
   const { theme, setTheme } = useTheme();
@@ -12,12 +13,13 @@ export function ThemeButton() {
 
   return (
     <div
-      className="flex items-center gap-2"
+      className="flex w-full items-center gap-2"
       onClick={(e) => {
         e.stopPropagation();
       }}
     >
       <Switch
+        id="theme-switch"
         checked={check}
         onCheckedChange={(e) => {
           setCheck((prev) => !prev);
@@ -36,18 +38,10 @@ export function ThemeButton() {
           className={cn("place-self-end", theme !== "dark" && "hidden")}
         />
       </div>
-      <div className="flex items-center gap-2">
-        {theme === "dark" && (
-          <>
-            <span>Dark</span>
-          </>
-        )}
-        {theme === "light" && (
-          <>
-            <span>Light</span>
-          </>
-        )}
-      </div>
+      <Label htmlFor="theme-switch" className="w-full py-1">
+        {theme === "dark" && "Dark"}
+        {theme === "light" && "Light"}
+      </Label>
     </div>
   );
 }
