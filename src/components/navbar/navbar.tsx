@@ -7,7 +7,7 @@ export async function Navbar() {
   const session = await auth();
 
   return (
-    <nav className="flex justify-center">
+    <nav className="flex justify-center sticky top-0 backdrop-filter backdrop-blur-lg">
       <ul className="flex max-w-screen-2xl flex-1 items-center justify-between px-8 py-4">
         <li className="text-lg font-bold">
           <Link href={"/"}>Note</Link>

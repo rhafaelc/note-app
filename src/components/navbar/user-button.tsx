@@ -23,7 +23,7 @@ export async function UserButton(props: { email: string }) {
 
   return (
     <div className="flex gap-12">
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger>
           <ProfileAvatar image={user.image} name={user.name!} />
         </DropdownMenuTrigger>
