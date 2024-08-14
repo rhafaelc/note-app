@@ -11,6 +11,7 @@ import { SignOut } from "../signout-button";
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
+import { ThemeButton } from "./theme-button";
 
 export async function UserButton(props: { email: string }) {
   const user = await db.query.users.findFirst({
@@ -26,10 +27,13 @@ export async function UserButton(props: { email: string }) {
         <DropdownMenuTrigger>
           <ProfileAvatar image={user.image} name={user.name!} />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-40">
+        <DropdownMenuContent className="w-40" align="end" >
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
+          <DropdownMenuItem>
+            <ThemeButton />
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <SignOut />
           </DropdownMenuItem>
