@@ -3,7 +3,7 @@ import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./db";
 import Credentials from "next-auth/providers/credentials";
-import * as argon2 from "argon2";
+import bcrypt from 'bcrypt'
 import { loginSchema } from "./schema/login-schema";
 import { eq } from "drizzle-orm";
 import { users } from "./db/schema";
@@ -33,8 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return null;
           }
 
-          const match = await argon2.verify(user.password, password);
-
+          const match = await bcrypt.compare(password, user.password);
           if (!match) {
             return null;
           }

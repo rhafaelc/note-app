@@ -5,7 +5,7 @@ import { db } from "../db";
 import { eq } from "drizzle-orm";
 import { users } from "../db/schema";
 import { registerSchema } from "../schema/register-schema";
-import * as argon2 from "argon2";
+import bcrypt from "bcrypt";
 
 export const registerAction = actionClient
   .schema(registerSchema)
@@ -18,7 +18,7 @@ export const registerAction = actionClient
       if (existingUser) {
         return { error: "User already exists" };
       }
-      const pwHash = await argon2.hash(password);
+      const pwHash = await bcrypt.hash(password, 10);
       const newUser = await db
         .insert(users)
         .values({
