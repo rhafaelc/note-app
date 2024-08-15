@@ -19,6 +19,7 @@ import { useAction } from "next-safe-action/hooks";
 import { noteAction } from "~/server/action/note-action";
 import { toast } from "sonner";
 import React from "react";
+import { Tiptap } from "./tiptap";
 
 export function NoteForm(props: {
   userId: string;
@@ -91,11 +92,12 @@ export function NoteForm(props: {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input
+                {/* <Input
                   placeholder="Your description"
                   {...field}
                   disabled={status === "executing"}
-                />
+                /> */}
+                <Tiptap onChange={field.onChange} />
               </FormControl>
               <FormDescription>
                 This is the description for the note.
