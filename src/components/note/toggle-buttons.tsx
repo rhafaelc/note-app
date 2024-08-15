@@ -1,6 +1,14 @@
 import { type Editor } from "@tiptap/react";
 import { Toggle } from "../ui/toggle";
-import { Bold, Italic, List, ListOrdered, StrikethroughIcon, Underline } from "lucide-react";
+import {
+  Bold,
+  Highlighter,
+  Italic,
+  List,
+  ListOrdered,
+  StrikethroughIcon,
+  Underline,
+} from "lucide-react";
 
 export function ToggleButtons(props: { editor: Editor }) {
   return (
@@ -37,21 +45,32 @@ export function ToggleButtons(props: { editor: Editor }) {
         <StrikethroughIcon className="h-4 w-4" />
       </Toggle>
       <Toggle
-            pressed={props.editor.isActive("orderedList")}
-            onPressedChange={() =>
-              props.editor.chain().focus().toggleOrderedList().run()
-            }
-            size={"sm"}>
-            <ListOrdered className="w-4 h-4" />
-          </Toggle>
-          <Toggle
-            pressed={props.editor.isActive("bulletList")}
-            onPressedChange={() =>
-              props.editor.chain().focus().toggleBulletList().run()
-            }
-            size={"sm"}>
-            <List className="w-4 h-4" />
-          </Toggle>
+        pressed={props.editor.isActive("orderedList")}
+        onPressedChange={() =>
+          props.editor.chain().focus().toggleOrderedList().run()
+        }
+        size={"sm"}
+      >
+        <ListOrdered className="h-4 w-4" />
+      </Toggle>
+      <Toggle
+        pressed={props.editor.isActive("bulletList")}
+        onPressedChange={() =>
+          props.editor.chain().focus().toggleBulletList().run()
+        }
+        size={"sm"}
+      >
+        <List className="h-4 w-4" />
+      </Toggle>
+      <Toggle
+        pressed={props.editor.isActive("highlight")}
+        onPressedChange={() =>
+          props.editor.chain().focus().toggleHighlight().run()
+        }
+        size={"sm"}
+      >
+        <Highlighter className="h-4 w-4" />
+      </Toggle>
     </div>
   );
 }

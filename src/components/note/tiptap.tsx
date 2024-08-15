@@ -6,6 +6,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import React, { useEffect, useState } from "react";
 import { ToggleButtons } from "./toggle-buttons";
 import Underline from "@tiptap/extension-underline";
+import Highlight from "@tiptap/extension-highlight";
 import "~/styles/tiptap.css";
 
 export function Tiptap(props: { onChange: (richText: string) => void }) {
@@ -33,6 +34,7 @@ export function Tiptap(props: { onChange: (richText: string) => void }) {
         },
       }),
       Underline,
+      Highlight,
     ],
     content: "",
 
@@ -44,15 +46,16 @@ export function Tiptap(props: { onChange: (richText: string) => void }) {
     },
     onUpdate({ editor }) {
       props.onChange(editor.getHTML());
-      console.log(editor.getHTML());
     },
     immediatelyRender: false,
   });
 
   return (
-    <>
+    <div className="relative flex flex-col gap-2">
       {editor && <ToggleButtons editor={editor} />}
-      <EditorContent editor={editor} />
-    </>
+      <div className="text-left">
+        <EditorContent editor={editor} />
+      </div>
+    </div>
   );
 }

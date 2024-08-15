@@ -43,14 +43,14 @@ export function AddButton(props: { session: Session | null }) {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DialogContent className="max-h-screen overflow-y-scroll">
-        <DialogHeader>
+      <DialogContent className="max-h-screen overflow-y-auto overflow-x-hidden">
+        <DialogHeader className="overflow-x-auto">
           <DialogTitle>Add a new note</DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="">
             Add a new note to your collection. Once added, you can view, edit,
             or delete the note&apos;s details.
           </DialogDescription>
-          <div>
+          <div className="w-full">
             <NoteForm userId={props.session.user!.id!} setOpen={setOpen} />
           </div>
         </DialogHeader>

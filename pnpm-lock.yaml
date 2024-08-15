@@ -44,6 +44,9 @@ importers:
       '@t3-oss/env-nextjs':
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.5.4)(zod@3.23.8)
+      '@tiptap/extension-highlight':
+        specifier: ^2.6.3
+        version: 2.6.3(@tiptap/core@2.6.3(@tiptap/pm@2.6.3))
       '@tiptap/extension-placeholder':
         specifier: ^2.6.3
         version: 2.6.3(@tiptap/core@2.6.3(@tiptap/pm@2.6.3))(@tiptap/pm@2.6.3)
@@ -1094,6 +1097,11 @@ packages:
 
   '@tiptap/extension-heading@2.6.3':
     resolution: {integrity: sha512-OuT2pAKj7UBOotOjZynwupvalL0dp8gHD411MCwPhzbVW5qGFadCiOp/WgSFMFVl+6uERHQiPfTBYIqYMNuBCQ==}
+    peerDependencies:
+      '@tiptap/core': ^2.6.3
+
+  '@tiptap/extension-highlight@2.6.3':
+    resolution: {integrity: sha512-/AcY0QRjUrrMqe/3Y1C4w2+C6sL/SIiAW04HdOy0Fu8byVXMM7P89SU+IfcFT3aFek/q8aLewAHpQwaDQNZE9w==}
     peerDependencies:
       '@tiptap/core': ^2.6.3
 
@@ -4046,6 +4054,10 @@ snapshots:
       '@tiptap/core': 2.6.3(@tiptap/pm@2.6.3)
 
   '@tiptap/extension-heading@2.6.3(@tiptap/core@2.6.3(@tiptap/pm@2.6.3))':
+    dependencies:
+      '@tiptap/core': 2.6.3(@tiptap/pm@2.6.3)
+
+  '@tiptap/extension-highlight@2.6.3(@tiptap/core@2.6.3(@tiptap/pm@2.6.3))':
     dependencies:
       '@tiptap/core': 2.6.3(@tiptap/pm@2.6.3)
 

@@ -66,7 +66,7 @@ export function NoteForm(props: {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-1">
         <FormField
           control={form.control}
           name="title"
@@ -74,11 +74,14 @@ export function NoteForm(props: {
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Your title"
-                  {...field}
-                  disabled={status === "executing"}
-                />
+                <>
+                  
+                  <Input
+                    placeholder="Your title"
+                    {...field}
+                    disabled={status === "executing"}
+                  />
+                </>
               </FormControl>
               <FormDescription>This is the title for the note.</FormDescription>
               <FormMessage />
@@ -97,7 +100,7 @@ export function NoteForm(props: {
                   {...field}
                   disabled={status === "executing"}
                 /> */}
-                <Tiptap onChange={field.onChange} />
+                  <Tiptap onChange={field.onChange} />
               </FormControl>
               <FormDescription>
                 This is the description for the note.
