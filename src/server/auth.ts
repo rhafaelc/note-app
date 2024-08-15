@@ -3,14 +3,27 @@ import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./db";
 import Credentials from "next-auth/providers/credentials";
-import bcrypt from 'bcrypt'
-import { loginSchema } from "./schema/login-schema";
+import bcrypt from "bcrypt";
+import { loginSchema } from "./form/login-schema";
 import { eq } from "drizzle-orm";
 import { users } from "./db/schema";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(db),
   session: { strategy: "jwt" },
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        // User is available during sign-in
+        token.id = user.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id = token.id as string;
+      return session;
+    },
+  },
   providers: [
     Google,
     Credentials({

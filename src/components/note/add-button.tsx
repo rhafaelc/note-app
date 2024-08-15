@@ -1,3 +1,5 @@
+"use client";
+
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -14,14 +16,23 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { NoteForm } from "./note-form";
+import { type Session } from "next-auth";
+import { useState } from "react";
 
-export function AddButton() {
+export function AddButton(props: { session: Session | null }) {
+  const [open, setOpen] = useState(false);
+
+  if (!props.session) return null;
   return (
-    <Dialog >
+    <Dialog open={open} onOpenChange={setOpen}>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button asChild className="fixed bottom-3 ml-3 rounded-full px-2 py-2">
+            <Button
+              asChild
+              className="fixed bottom-3 ml-3 rounded-full px-2 py-2"
+            >
               <DialogTrigger>
                 <Plus />
               </DialogTrigger>
@@ -32,13 +43,16 @@ export function AddButton() {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DialogContent className="overflow-y-scroll max-h-screen">
+      <DialogContent className="max-h-screen overflow-y-scroll">
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Add a new note</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            Add a new note to your collection. Once added, you can view, edit,
+            or delete the note&apos;s details.
           </DialogDescription>
+          <div>
+            <NoteForm userId={props.session.user!.id!} setOpen={setOpen} />
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>

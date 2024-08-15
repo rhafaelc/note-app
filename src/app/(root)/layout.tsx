@@ -4,6 +4,7 @@ import { ThemeProvider } from "~/components/theme-provider";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import { Navbar } from "~/components/navbar/navbar";
+import { Toaster } from "~/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Note app",
@@ -20,6 +21,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar />
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
