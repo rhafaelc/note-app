@@ -17,7 +17,7 @@ import { useAction } from "next-safe-action/hooks";
 import { useState } from "react";
 import { ErrorMessage } from "./error-message";
 import { SuccessMessage } from "./success-message";
-import { registerSchema } from "~/server/schema/register-schema";
+import { registerSchema } from "~/server/form/register-schema";
 import { registerAction } from "~/server/action/register-action";
 
 export function RegisterForm() {

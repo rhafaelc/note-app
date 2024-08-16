@@ -5,6 +5,7 @@ import {
   primaryKey,
   integer,
 } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 import type { AdapterAccountType } from "next-auth/adapters";
 
 export const users = pgTable("user", {
@@ -13,7 +14,6 @@ export const users = pgTable("user", {
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
   email: text("email").unique(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
   password: text("password"),
   image: text("image"),
 });
@@ -41,3 +41,23 @@ export const accounts = pgTable(
     }),
   }),
 );
+
+export const notes = pgTable("notes", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("userId").notNull(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+});
+
+export const usersRelations = relations(users, ({ many }) => ({
+  notes: many(notes),
+}));
+
+export const notesRelations = relations(notes, ({ one }) => ({
+  author: one(users, {
+    fields: [notes.userId],
+    references: [users.id],
+  }),
+}));

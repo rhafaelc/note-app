@@ -1,7 +1,7 @@
 "use server"; // don't forget to add this!
 
 import { actionClient } from "~/lib/safe-action";
-import { loginSchema } from "../schema/login-schema";
+import { loginSchema } from "../form/login-schema";
 import { db } from "../db";
 import { eq } from "drizzle-orm";
 import { users } from "../db/schema";

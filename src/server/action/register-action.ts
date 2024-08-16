@@ -4,7 +4,7 @@ import { actionClient } from "~/lib/safe-action";
 import { db } from "../db";
 import { eq } from "drizzle-orm";
 import { users } from "../db/schema";
-import { registerSchema } from "../schema/register-schema";
+import { registerSchema } from "../form/register-schema";
 import bcrypt from "bcrypt";
 
 export const registerAction = actionClient

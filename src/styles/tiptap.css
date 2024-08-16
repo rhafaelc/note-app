@@ -1,0 +1,17 @@
+@import "globals.css";
+
+p.is-editor-empty:first-child::before {
+  color: hsl(var(--muted-foreground));
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+mark {
+  background-color: hsl(var(--accent-foreground));
+  color: hsl(var(--accent));
+  border-radius: 0.4rem;
+  box-decoration-break: clone;
+  padding: 0.1rem 0.3rem;
+}
