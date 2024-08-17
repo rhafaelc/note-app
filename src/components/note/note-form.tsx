@@ -69,7 +69,7 @@ export function NoteForm(props: {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-1">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-1">
         <FormField
           control={form.control}
           name="title"
