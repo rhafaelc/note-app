@@ -8,8 +8,10 @@ import { ToggleButtons } from "./toggle-buttons";
 import Underline from "@tiptap/extension-underline";
 import Highlight from "@tiptap/extension-highlight";
 import "~/styles/tiptap.css";
+import { useFormContext } from "react-hook-form";
 
-export function Tiptap(props: { onChange: (richText: string) => void }) {
+export function Tiptap(props: { disabled?: boolean; value?: string }) {
+  const { setValue } = useFormContext();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export function Tiptap(props: { onChange: (richText: string) => void }) {
       Underline,
       Highlight,
     ],
-    content: "",
+    content: props.value ?? "",
 
     editorProps: {
       attributes: {
@@ -45,8 +47,12 @@ export function Tiptap(props: { onChange: (richText: string) => void }) {
       },
     },
     onUpdate({ editor }) {
-      props.onChange(editor.getHTML());
+      setValue("description", editor.getHTML(), {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
     },
+    // editable: props.disabled,
     immediatelyRender: false,
   });
 

@@ -6,7 +6,7 @@ export default async function HomePage() {
   const session = await auth();
 
   return (
-    <main className="mx-auto max-w-screen-2xl">
+    <main className="mx-auto max-w-screen-2xl p-1">
       <MyNotes />
       <AddButton session={session} />
     </main>
