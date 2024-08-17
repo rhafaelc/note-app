@@ -1,29 +1,74 @@
-# Create T3 App
+# Note App
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+The **Note App** is a simple and efficient tool for taking and managing notes. It offers a secure way to create, update, and delete notes, with user authentication to ensure that your notes are kept private and accessible only to you.
 
-## What's next? How do I make an app with this?
+## Table of Contents
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- [Introduction](#introduction)
+- [Features](#features)
+- [How to Use](#how-to-use)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Technologies Used](#technologies-used)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Introduction
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+The Note App is designed to provide a seamless experience for taking notes, with support for rich text formatting. The app requires users to log in to access their notes, ensuring that your data is secure and personalized. All operations are handled on the client side for fast and responsive interactions.
 
-## Learn More
+## Features
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- **User Authentication**: Sign up or log in using Auth.js, with the option to authenticate via Google or create a new account.
+- **Add Notes**: Create new notes with a rich text editor powered by Tiptap.
+- **Update Notes**: Edit your existing notes to keep them up-to-date.
+- **Delete Notes**: Remove notes that are no longer needed.
+- **Filter Notes**: Easily filter your notes based on keywords or tags.
+- **Pagination**: Navigate through large sets of notes with built-in pagination.
+- **Secure Access**: Notes are securely stored in a Supabase PostgreSQL database, accessed via Drizzle ORM.
+- **Modern UI**: Built with ShadCN UI components for a clean and modern user interface.
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## How to Use
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+1. **Log In**: To use the Note App, you must log in. You can create a new account or log in using your Google account.
+2. **Add a Note**: Once logged in, use the "Add Note" button to create a new note. You can use the rich text editor to format your text as needed.
+3. **Update a Note**: Click on an existing note to edit its content.
+4. **Delete a Note**: If you no longer need a note, you can delete it from your notes list.
+5. **Filter Notes**: Use the filter option to search for notes based on keywords or tags.
+6. **Paginate Notes**: If you have many notes, use the pagination controls to navigate through pages of notes.
 
-## How do I deploy this?
+## Installation
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+To run the app locally, follow these steps:
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/rhafaelc/note-app.git
+   ```
+
+2. Navigate to the project directory:
+   ```sh
+   cd note-app
+   ```
+
+3. Install dependencies using pnpm:
+   ```sh
+   pnpm install
+   ```
+
+4. Start the development server:
+   ```sh
+   pnpm dev
+   ```
+
+## Usage
+
+Once the app is running locally, open your browser and navigate to `http://localhost:3000`. Log in or sign up to start managing your notes. You must be logged in to add, update, or delete notes. Use the filtering and pagination features to organize and navigate your notes effectively.
+
+## Technologies Used
+
+- **Next.js 14** with App Router for routing.
+- **Auth.js** for secure authentication, with support for Google and email-based sign-up.
+- **Supabase** with PostgreSQL for database management.
+- **Drizzle ORM** for database access and querying.
+- **ShadCN UI** for a modern user interface.
+- **Tiptap** for a rich text editor experience.
+- **Tailwind CSS** for styling.

@@ -15,8 +15,10 @@ import {
 } from "~/components/ui/card";
 import { Button } from "../ui/button";
 import { DetailsButtons } from "./details-buttons";
+import { formatDistance, subDays } from "date-fns";
 
 type Note = InferSelectModel<typeof notes>;
+
 
 export function NoteDetails(props: {
   noteId: string;
@@ -37,10 +39,12 @@ export function NoteDetails(props: {
     <Card className="">
       <CardHeader>
         <CardTitle className="overflow-x-auto">{note.title}</CardTitle>
-        <CardDescription>{note.createdAt.toUTCString()}</CardDescription>
+        <CardDescription>
+          {formatDistance(subDays(note.createdAt, 0), new Date())} ago
+        </CardDescription>
       </CardHeader>
       <CardContent className="">
-        <DetailsButtons note={note}/>
+        <DetailsButtons note={note} />
         <div className="overflow-x-auto">
           <div dangerouslySetInnerHTML={{ __html: note.description }}></div>
         </div>
