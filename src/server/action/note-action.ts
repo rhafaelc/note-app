@@ -16,7 +16,7 @@ export const noteAction = actionClient
         const user = await db.query.users.findFirst({
           where: eq(users.id, userId),
         });
-        if (user?.noteLimit! <= 0) {
+        if (user!.noteLimit! <= 0) {
           return { error: "Note quota reached" };
         }
 
