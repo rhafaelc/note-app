@@ -24,20 +24,23 @@ import { Tiptap } from "./tiptap";
 export function NoteForm(props: {
   userId: string;
   setOpen: React.Dispatch<boolean>;
+  id?: string;
+  title?: string;
+  description?: string;
 }) {
   const form = useForm<z.infer<typeof noteSchema>>({
     resolver: zodResolver(noteSchema),
     defaultValues: {
-      id: "",
-      title: "",
-      description: "",
+      id: props.id ?? "",
+      title: props.title ?? "",
+      description: props.description ?? "",
       userId: props.userId,
     },
   });
 
   const { execute, status } = useAction(noteAction, {
     onExecute() {
-      toast.loading("Creating a new note", {
+      toast.loading("Editing the note", {
         duration: Infinity,
       });
     },
@@ -75,7 +78,6 @@ export function NoteForm(props: {
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <>
-                  
                   <Input
                     placeholder="Your title"
                     {...field}
@@ -93,14 +95,14 @@ export function NoteForm(props: {
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel htmlFor="description">Description</FormLabel>
               <FormControl>
                 {/* <Input
                   placeholder="Your description"
                   {...field}
                   disabled={status === "executing"}
                 /> */}
-                  <Tiptap onChange={field.onChange} />
+                <Tiptap value={field.value} disabled={status === "executing"} />
               </FormControl>
               <FormDescription>
                 This is the description for the note.
@@ -110,7 +112,7 @@ export function NoteForm(props: {
           )}
         />
         <Button type="submit" disabled={status === "executing"}>
-          Create
+          {props.id ? "Edit" : "Create"}
         </Button>
       </form>
     </Form>

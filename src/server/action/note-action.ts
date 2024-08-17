@@ -5,6 +5,7 @@ import { noteSchema } from "../form/note-schema";
 import { db } from "../db";
 import { notes } from "../db/schema";
 import { revalidatePath } from "next/cache";
+import { eq } from "drizzle-orm";
 
 export const noteAction = actionClient
   .schema(noteSchema)
@@ -32,5 +33,24 @@ export const noteAction = actionClient
 
     if (id) {
       //edit
+      try {
+        const editNode = await db
+          .update(notes)
+          .set({
+            createdAt: new Date(),
+            description,
+            title,
+          })
+          .where(eq(notes.id, id))
+          .returning();
+        if (!editNode[0]) {
+          return { error: "Can't edit the note" };
+        }
+        revalidatePath("/");
+        revalidatePath(`/note/${id}`);
+        return { success: `Edited a note with title ${editNode[0].title}` };
+      } catch (error) {
+        return { error: "Can't edit the note" };
+      }
     }
   });
