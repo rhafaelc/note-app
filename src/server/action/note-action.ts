@@ -31,9 +31,12 @@ export const noteAction = actionClient
         if (!newNote[0]) {
           return { error: "Can't create a new note" };
         }
-        await db.update(users).set({
-          noteLimit: sql`${users.noteLimit} - 1`,
-        });
+        await db
+          .update(users)
+          .set({
+            noteLimit: sql`${users.noteLimit} - 1`,
+          })
+          .where(eq(users.id, newNote[0].userId));
         revalidatePath("/");
         return { success: `Created a note with title ${newNote[0].title}` };
       } catch (error) {

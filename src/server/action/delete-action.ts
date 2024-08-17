@@ -23,9 +23,12 @@ export const deleteAction = actionClient
         return { error: "Can't delete the note" };
       }
       revalidatePath("/");
-      await db.update(users).set({
-        noteLimit: sql`${users.noteLimit} + 1`,
-      });
+      await db
+        .update(users)
+        .set({
+          noteLimit: sql`${users.noteLimit} + 1`,
+        })
+        .where(eq(users.id, deletedNote[0].userId));
 
       return { success: `Deleted note ${id}` };
     } catch (error) {
