@@ -49,6 +49,7 @@ export const notes = pgTable("notes", {
   userId: text("userId").notNull(),
   title: text("title").notNull(),
   description: text("description").notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
