@@ -4,6 +4,32 @@ import { NoteDetails } from "~/components/note/note-details";
 import { auth } from "~/server/auth";
 import { db } from "~/server/db";
 import { notes } from "~/server/db/schema";
+import type { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: { noteId: string };
+  searchParams: Record<string, string | string[] | undefined>;
+};
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const id = params.noteId;
+
+  const existingNote = await db.query.notes.findFirst({
+    where: eq(notes.id, id),
+  });
+
+  if (!existingNote) {
+    return {
+      title: "Note - 404",
+    };
+  }
+
+  return {
+    title: `Note - ${existingNote.title}`,
+  };
+}
 
 export default async function NoteDetailsPage({
   params,

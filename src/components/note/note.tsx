@@ -9,6 +9,7 @@ import {
 } from "~/components/ui/card";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { formatDistance, subDays } from "date-fns";
 
 export function Note(props: {
   id: string;
@@ -21,7 +22,9 @@ export function Note(props: {
     <Card className="flex flex-col">
       <CardHeader>
         <CardTitle className="truncate">{props.title}</CardTitle>
-        <CardDescription>{props.createdAt.toUTCString()}</CardDescription>
+        <CardDescription>
+          {formatDistance(subDays(props.createdAt, 0), new Date())} ago
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden">
         <div
@@ -30,7 +33,7 @@ export function Note(props: {
         ></div>
       </CardContent>
       <CardFooter className="flex items-end justify-end">
-        <Button asChild variant={'ghost'}>
+        <Button asChild variant={"ghost"}>
           <Link href={`/note/${props.id}`}>
             <ExternalLink />
           </Link>
