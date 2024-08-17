@@ -3,8 +3,8 @@
 import { z } from "zod";
 import { actionClient } from "~/lib/safe-action";
 import { db } from "../db";
-import { notes } from "../db/schema";
-import { eq } from "drizzle-orm";
+import { notes, users } from "../db/schema";
+import { eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 const schema = z.object({
@@ -23,6 +23,10 @@ export const deleteAction = actionClient
         return { error: "Can't delete the note" };
       }
       revalidatePath("/");
+      await db.update(users).set({
+        noteLimit: sql`${users.noteLimit} + 1`,
+      });
+
       return { success: `Deleted note ${id}` };
     } catch (error) {
       return { error: "Can't delete the note" };

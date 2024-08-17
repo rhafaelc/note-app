@@ -3,9 +3,9 @@
 import { actionClient } from "~/lib/safe-action";
 import { noteSchema } from "../form/note-schema";
 import { db } from "../db";
-import { notes } from "../db/schema";
+import { notes, users } from "../db/schema";
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export const noteAction = actionClient
   .schema(noteSchema)
@@ -13,6 +13,13 @@ export const noteAction = actionClient
     if (!id) {
       // new note
       try {
+        const user = await db.query.users.findFirst({
+          where: eq(users.id, userId),
+        });
+        if (user?.noteLimit! <= 0) {
+          return { error: "Note quota reached" };
+        }
+
         const newNote = await db
           .insert(notes)
           .values({
@@ -24,6 +31,9 @@ export const noteAction = actionClient
         if (!newNote[0]) {
           return { error: "Can't create a new note" };
         }
+        await db.update(users).set({
+          noteLimit: sql`${users.noteLimit} - 1`,
+        });
         revalidatePath("/");
         return { success: `Created a note with title ${newNote[0].title}` };
       } catch (error) {

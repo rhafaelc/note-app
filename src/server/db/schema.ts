@@ -4,6 +4,7 @@ import {
   text,
   primaryKey,
   integer,
+  real,
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import type { AdapterAccountType } from "next-auth/adapters";
@@ -16,6 +17,7 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   password: text("password"),
   image: text("image"),
+  noteLimit: real("noteLimit").default(100),
 });
 
 export const accounts = pgTable(
