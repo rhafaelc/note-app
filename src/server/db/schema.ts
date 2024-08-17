@@ -1,36 +1,67 @@
-// Example model schema from the Drizzle docs
-// https://orm.drizzle.team/docs/sql-schema-declaration
-
-import { sql } from "drizzle-orm";
 import {
-  index,
-  pgTableCreator,
-  serial,
   timestamp,
-  varchar,
+  pgTable,
+  text,
+  primaryKey,
+  integer,
+  real,
 } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import type { AdapterAccountType } from "next-auth/adapters";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const createTable = pgTableCreator((name) => `note-app_${name}`);
+export const users = pgTable("user", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name"),
+  email: text("email").unique(),
+  password: text("password"),
+  image: text("image"),
+  emailVerified: timestamp("emailVerified", { mode: "date" }),
+  noteLimit: real("noteLimit").default(100),
+});
 
-export const posts = createTable(
-  "post",
+export const accounts = pgTable(
+  "account",
   {
-    id: serial("id").primaryKey(),
-    name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
-      () => new Date()
-    ),
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").$type<AdapterAccountType>().notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("providerAccountId").notNull(),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  })
+  (account) => ({
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
+  }),
 );
+
+export const notes = pgTable("notes", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("userId").notNull(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
+export const usersRelations = relations(users, ({ many }) => ({
+  notes: many(notes),
+}));
+
+export const notesRelations = relations(notes, ({ one }) => ({
+  author: one(users, {
+    fields: [notes.userId],
+    references: [users.id],
+  }),
+}));

@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "noteLimit" real DEFAULT 100;
