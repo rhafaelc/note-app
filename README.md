@@ -25,6 +25,7 @@ The Note App is designed to provide a seamless experience for taking notes, with
 - **Pagination**: Navigate through large sets of notes with built-in pagination.
 - **Secure Access**: Notes are securely stored in a Supabase PostgreSQL database, accessed via Drizzle ORM.
 - **Modern UI**: Built with ShadCN UI components for a clean and modern user interface.
+- **Theme**: Easily change themes (dark/light) when user is authenticated.
 
 ## How to Use
 
@@ -65,7 +66,7 @@ Once the app is running locally, open your browser and navigate to `http://local
 
 ## Technologies Used
 
-- **Next.js 14** with App Router for routing.
+- **Next.js 14** App Router.
 - **Auth.js** for secure authentication, with support for Google and email-based sign-up.
 - **Supabase** with PostgreSQL for database management.
 - **Drizzle ORM** for database access and querying.
